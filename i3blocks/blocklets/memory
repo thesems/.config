@@ -48,10 +48,12 @@ END {
 	pct=used/total*100
 
 	# full text
-	printf("Memory: %.1fG/%.1fG (%.f%%)\n", used, total, pct)
+	# printf("%.1fG/%.1fG (%.f%%)\n", used, total, pct)
 
 	# short text
-	printf("%.f%%\n", pct)
+	# printf("%.f%%\n", pct)
+
+	printf("%.1fGB\n", used)
 
 	# color
 	if (pct > 90) {

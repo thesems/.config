@@ -8,4 +8,4 @@ output=$(pactl -- get-sink-volume @DEFAULT_SINK@)
 volume_percentage=$(echo "$output" | awk -F'/' '{print $2}' | tr -d '[:space:]')
 
 # Print the volume percentage
-echo "Volume: $volume_percentage"
+echo "$volume_percentage"

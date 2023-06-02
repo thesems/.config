@@ -1,0 +1,9 @@
+#!/bin/bash
+
+export LC_ALL=C
+
+MAX_MHZ=$(lscpu --all --extended=MHZ | awk 'BEGIN{max=0} {if ($1+0 > max+0) max=$1} END{print max}')
+MAX_GHZ=$(echo "$MAX_MHZ / 1000" | bc -l)
+
+printf "%.2f GHz\n" "$MAX_GHZ"
+
