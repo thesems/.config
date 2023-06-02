@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Run the pactl command and store the output
+output=$(pactl -- get-sink-volume @DEFAULT_SINK@)
+
+# Extract the volume percentage using awk
+# volume_percentage=$(echo "$output" | awk '{print $(NF-1)}')
+volume_percentage=$(echo "$output" | awk -F'/' '{print $2}' | tr -d '[:space:]')
+
+# Print the volume percentage
+echo "Volume: $volume_percentage"

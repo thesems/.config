@@ -5,14 +5,17 @@
         "**/*.pyc": true
     },
     "search.exclude": {
-        "dist": true
+        "dist": true,
+        "**/node_modules": true,
+        "**/.venv": true
     },
     "[python]": {
         "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
             "source.organizeImports": true
         },
-        "editor.formatOnType": true
+        "editor.formatOnType": true,
+        "editor.defaultFormatter": "ms-python.black-formatter"
     },
     "[javascript][javascriptreact][typescript]": {
         "editor.defaultFormatter": "vscode.typescript-language-features"
@@ -23,29 +26,13 @@
     "[yaml]": {
         "editor.defaultFormatter": "redhat.vscode-yaml"
     },
-    "workbench.colorTheme": "Oceanic Next (dimmed bg)",
-    "workbench.sideBar.location": "right",
-    "window.titleBarStyle": "custom",
-    "window.zoomLevel": 1,
-    "editor.fontFamily": "'JetBrains Mono'",
-    "editor.fontLigatures": true,
-    "editor.minimap.enabled": false,
-    "editor.formatOnSave": true,
-    "editor.rulers": [
-        80
-    ],
-    "debug.toolBarLocation": "docked",
     "python.analysis.typeCheckingMode": "basic",
     "python.analysis.diagnosticMode": "workspace",
     "python.formatting.provider": "black",
     "python.formatting.blackArgs": [
         "--line-length",
-        "79"
-    ],
-    "black-formatter.args": [
-        "--line-length",
-        "79",
-        "--experimental-string-processing"
+        "80",
+        "--preview"
     ],
     "python.linting.flake8Enabled": true,
     "python.linting.flake8Args": [
@@ -59,9 +46,23 @@
     ],
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
-    "isort.args": [
-        "--profile",
-        "black"
+    "window.title": "${dirty}${activeEditorShort}${separator}${rootPath}",
+    "window.titleBarStyle": "custom",
+    "window.zoomLevel": 1,
+    "workbench.colorTheme": "Darcula Theme from IntelliJ",
+    "workbench.iconTheme": "vscode-jetbrains-icon-theme",
+    "workbench.sideBar.location": "right",
+    "workbench.editor.enablePreview": false,
+    "editor.fontFamily": "'JetBrains Mono'",
+    "editor.fontLigatures": true,
+    "editor.minimap.enabled": false,
+    "editor.formatOnSave": true,
+    "editor.rulers": [
+        80
     ],
+    "debug.toolBarLocation": "docked",
+    "debug.openExplorerOnEnd": true,
+    "git.openRepositoryInParentFolders": "never",
     "redhat.telemetry.enabled": true,
+    "workbench.startupEditor": "none"
 }
