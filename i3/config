@@ -35,7 +35,7 @@ exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id dunst 
 exec_always compton &;
 exec --no-startup-id clipit &; 
-exec_always feh --bg-scale ~/Pictures/background-palms.jpg
+exec_always feh --bg-scale ~/Pictures/pexels-simon-berger-1323550.jpg
 exec_always --no-startup-id nm-applet
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
@@ -51,7 +51,7 @@ exec --no-startup-id nm-applet
 
 # Custom bindsyms
 bindsym $mod+p exec ~/.config/i3/bin/logout
-bindsym $mod+l exec i3lock -i ~/Pictures/background-palms.jpg
+bindsym $mod+l exec i3lock -i ~/Pictures/pexels-simon-berger-1323550.jpg
 bindsym $mod+c exec firefox
 bindsym $mod+Shift+f exec ~/.config/i3/bin/rofifinder
 
@@ -68,6 +68,11 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume 0 +10
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10%
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
+bindsym $mod+F10 exec --no-startup-id pactl set-sink-mute toggle
+bindsym $mod+F11 exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10%
+bindsym $mod+F12 exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10%
+bindsym $mod+shift+F11 exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
 # Brightness
 bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
@@ -225,16 +230,21 @@ assign [class="vscode"] $ws3
 assign [class="vscode"] $ws4
 assign [class="Thunderbird"] $ws7
 
+# gaps
+gaps inner 20px
+# gaps outer 20px
+
 # i3blocks
 bar {
     # status_command i3status
-    status_command i3blocks
+    status_command i3blocks -c ~/.config/i3blocks/i3blocks.conf
     position top
     font pango:Hack, FontAwesome 11
 
     colors {
         separator #081419
-        background #253941
+        # background #253941
+        background #111111
         #statusline #839496
         focused_workspace #fdf6e3 #6c71c4 #fdf6e3
         active_workspace #fdf6e3 #6c71c4 #fdf6e3
