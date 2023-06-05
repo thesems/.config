@@ -4,8 +4,26 @@
 output=$(pactl -- get-sink-volume @DEFAULT_SINK@)
 
 # Extract the volume percentage using awk
-# volume_percentage=$(echo "$output" | awk '{print $(NF-1)}')
-volume_percentage=$(echo "$output" | awk -F'/' '{print $2}' | tr -d '[:space:]')
+volume_percentage=$(echo "$output" | awk -F'/' '{print $2}' | tr -d '[:space:]%')
 
-# Print the volume percentage
-echo "$volume_percentage"
+is_muted=$(pactl get-sink-mute @DEFAULT_SINK@)
+
+# Check if the sink is muted
+is_muted=$(echo "$is_muted" | awk '/Mute:/{print $2; exit}')
+
+# Define the muted icon unicode
+muted_icon='\uf026'
+volume_up_icon='\uf028'
+volume_down_icon='\uf027'
+
+# Remove newlines from the output
+# is_muted="${is_muted//[$'\n']/}"
+
+# Print the volume percentage and the muted icon if muted
+if [ "$is_muted" = "yes" ]; then
+  echo -e "$muted_icon muted"
+elif [ "$volume_percentage" -gt 50 ]; then
+  echo -e "$volume_up_icon $volume_percentage%"
+else
+  echo -e "$volume_down_icon $volume_percentage%"
+fi
