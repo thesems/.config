@@ -35,7 +35,7 @@ exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id dunst 
 exec_always compton &;
 exec --no-startup-id clipit &; 
-exec_always feh --bg-scale ~/Pictures/pexels-simon-berger-1323550.jpg
+exec_always feh --bg-scale ~/Pictures/main-background.jpg
 exec_always --no-startup-id nm-applet
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
@@ -54,6 +54,9 @@ bindsym $mod+p exec ~/.config/i3/bin/logout
 bindsym $mod+l exec i3lock -i ~/Pictures/pexels-simon-berger-1323550.jpg
 bindsym $mod+c exec firefox
 bindsym $mod+Shift+f exec ~/.config/i3/bin/rofifinder
+
+bindsym Control+Shift+Home	exec flameshot full
+bindsym Shift+Insert		exec flameshot gui
 
 # Enable Print Screen
 #bindsym --release $mod+Print exec gnome-screenshot -i
@@ -164,6 +167,21 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
+# Bind App to workspace
+# Check class by using xprop command
+assign [class="terminal"] $ws1
+assign [class="Firefox"] $ws2
+assign [class="Code"] $ws3
+assign [class="Code"] $ws4
+assign [class="teams"] $ws5
+assign [class="text"] $ws6
+assign [class="mqtt-explorer"] $ws7
+assign [class="redis"] $ws8
+assign [class="Thunderbird"] $ws9
+
+# Assign to certain workspace
+assign [window_role="browser"] $ws2
+
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
 bindsym $mod+2 workspace number $ws2
@@ -226,9 +244,13 @@ bindsym $mod+r mode "resize"
 # Check class by using xprop command
 assign [class="Terminal"] $ws1
 assign [class="Firefox"] $ws2
+assign [class="Chromium"] $ws2
 assign [class="vscode"] $ws3
-assign [class="vscode"] $ws4
-assign [class="Thunderbird"] $ws7
+assign [class="teams-for-linux"] $ws5
+assign [class="mqtt-explorer"] $ws7
+assign [class="Thunderbird"] $ws8
+assign [class="redisinsight"] $ws8
+assign [class="xmind"] $ws9
 
 # gaps
 gaps inner 20px
