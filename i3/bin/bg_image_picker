@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Directory where the images are stored
+dir=~/.config/pictures
+
+# Array of image names
+images=("main-background-1.jpg" "main-background-2.jpg" "main-background-3.jpg")
+
+# Get array size
+size=${#images[@]}
+
+# Generate a random number between 0 and size-1
+index=$(($RANDOM % $size))
+
+# Select an image
+image=${images[$index]}
+
+# Use feh to set the background
+feh --bg-scale $dir/$image

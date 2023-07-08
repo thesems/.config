@@ -35,7 +35,7 @@ exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id dunst 
 exec_always compton &;
 exec --no-startup-id clipit &; 
-exec_always feh --bg-scale ~/Pictures/main-background.jpg
+exec_always --no-startup-id ~/.config/i3/bin/bg_image_picker
 exec_always --no-startup-id nm-applet
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
