@@ -116,6 +116,9 @@ source $ZSH/oh-my-zsh.sh
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# Default terminal
+export TERMINAL=alacritty
+
 # Paths for CUDA libraries
 # export LD_LIBRARY_PATH=/usr/local/cuda-11.7/lib64:$LD_LIBRARY_PATH
 # export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
@@ -123,7 +126,7 @@ source $ZSH/oh-my-zsh.sh
 # export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/semir/.mujoco/mujoco210/bin
 
 # Load rust package builder - cargo
-. "$HOME/.cargo/env"
+source "$HOME/.cargo/env"
 
 # Load node version manager - nvm
 export NVM_DIR="$HOME/.nvm"

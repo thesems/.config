@@ -31,12 +31,14 @@ font pango:Inconsolata for Powerline 12
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec --no-startup-id dex --autostart --environment i3
 
-# Startup programs
+# Start-up programs
 exec --no-startup-id dunst 
-exec_always compton &;
-exec --no-startup-id clipit &; 
+
+exec_always --no-startup-id picom
+exec_always --no-startup-id diodon & 
 exec_always --no-startup-id ~/.config/i3/bin/bg_image_picker
 exec_always --no-startup-id nm-applet
+exec_always --no-startup-id flameshot
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
@@ -54,8 +56,8 @@ bindsym $mod+p exec ~/.config/i3/bin/logout
 bindsym $mod+l exec i3lock -i ~/Pictures/pexels-simon-berger-1323550.jpg
 bindsym $mod+c exec firefox
 bindsym $mod+Shift+f exec ~/.config/i3/bin/rofifinder
-
-bindsym Control+Shift+Home	exec flameshot full
+bindsym $mod+Print exec flameshot gui
+bindsym Control+Shift+Insert	exec flameshot full
 bindsym Shift+Insert		exec flameshot gui
 
 # Enable Print Screen
@@ -90,7 +92,7 @@ bindsym $mod+F6 exec brightnessctl set 5%+
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec alacritty
 
 # kill focused window
 bindsym $mod+q kill
