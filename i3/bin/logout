@@ -3,10 +3,10 @@
 option=`echo -e "suspend\nlock screen\nlogout\nreboot\npoweroff\nKill user $USER" | rofi -width 600 -dmenu -p system:`
 case $option in
     suspend)
-        sudo /usr/bin/systemctl suspend
+        /usr/bin/systemctl suspend
         ;;
     'lock screen')
-        i3lock -i /home/wsemir/.config/i3/main-background.jpg
+        i3lock -i /home/semir/.config/i3/main-background.png
         ;;
     logout)
         i3-nagbar -t warning -m 'Are you sure you  want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'
