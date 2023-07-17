@@ -174,7 +174,7 @@ set $ws10 "10 &#xf0ae;"
 assign [class="Terminal"] $ws1
 assign [class="Firefox"] $ws2
 assign [class="Chromium"] $ws2
-assign [class="code"] $ws3
+assign [class="(?i)code"] $ws3
 assign [class="teams-for-linux"] $ws5
 assign [class="teams"] $ws5
 assign [class="gedit"] $ws6
@@ -184,7 +184,9 @@ assign [class="redisinsight"] $ws8
 assign [class="xmind"] $ws9
 
 # Assign to certain workspace
+assign [window_role="terminal"] $ws1
 assign [window_role="browser"] $ws2
+assign [window_role="code"] $ws3
 
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
