@@ -138,5 +138,10 @@ export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
-# golang
-# export PATH=$PATH:/usr/local/go/bin
+# Python Poetry
+export PATH="/home/wsemir/.local/bin:$PATH"
+
+# Android / android studio
+export ANDROID_HOME=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
