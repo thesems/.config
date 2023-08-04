@@ -60,6 +60,9 @@ bindsym $mod+Print exec flameshot gui
 bindsym Control+Shift+Insert	exec flameshot full
 bindsym Shift+Insert		exec flameshot gui
 
+exec --no-startup-id diodon
+exec --no-startup-id dunst
+
 # Enable Print Screen
 #bindsym --release $mod+Print exec gnome-screenshot -i
 bindsym --release $mod+Shift+s exec shutter -s
@@ -174,7 +177,7 @@ set $ws10 "10 &#xf0ae;"
 assign [class="Terminal"] $ws1
 assign [class="Firefox"] $ws2
 assign [class="Chromium"] $ws2
-assign [class="(?i)code"] $ws3
+assign [class="code"] $ws3
 assign [class="teams-for-linux"] $ws5
 assign [class="teams"] $ws5
 assign [class="gedit"] $ws6
