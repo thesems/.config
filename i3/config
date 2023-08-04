@@ -32,13 +32,14 @@ font pango:Inconsolata for Powerline 12
 exec --no-startup-id dex --autostart --environment i3
 
 # Start-up programs
-exec --no-startup-id dunst 
-
 exec_always --no-startup-id picom
-exec --no-startup-id diodon
 exec_always --no-startup-id ~/.config/i3/bin/bg_image_picker
 exec_always --no-startup-id nm-applet
 exec_always --no-startup-id flameshot
+# exec_always --no-startup-id pasystray
+# exec_alaways --no-startup-id blue-man
+exec --no-startup-id diodon
+exec --no-startup-id dunst 
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
@@ -59,9 +60,6 @@ bindsym $mod+Shift+f exec ~/.config/i3/bin/rofifinder
 bindsym $mod+Print exec flameshot gui
 bindsym Control+Shift+Insert	exec flameshot full
 bindsym Shift+Insert		exec flameshot gui
-
-exec --no-startup-id diodon
-exec --no-startup-id dunst
 
 # Enable Print Screen
 #bindsym --release $mod+Print exec gnome-screenshot -i
@@ -177,7 +175,7 @@ set $ws10 "10 &#xf0ae;"
 assign [class="Terminal"] $ws1
 assign [class="Firefox"] $ws2
 assign [class="Chromium"] $ws2
-assign [class="code"] $ws3
+assign [class="(?i)code"] $ws3
 assign [class="teams-for-linux"] $ws5
 assign [class="teams"] $ws5
 assign [class="gedit"] $ws6
