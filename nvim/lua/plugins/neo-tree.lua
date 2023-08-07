@@ -2,7 +2,7 @@ return {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
     keys = {
-        { "<space><space>", "<cmd>Neotree toggle<cr>", desc = "NeoTree" }
+        { "<space>t", "<cmd>Neotree toggle<cr>", desc = "NeoTree" }
     },
     dependencies = {
       "nvim-lua/plenary.nvim",

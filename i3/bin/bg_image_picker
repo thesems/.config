@@ -4,7 +4,7 @@
 dir=~/.config/pictures
 
 # Array of image names
-images=("main-background-1.jpg" "main-background-2.jpg" "main-background-3.jpg")
+images=("main-background-1.jpg" "main-background-2.jpg" "main-background-3.jpg" "main-background-4.jpg" "main-background-5.jpg")
 
 # Get array size
 size=${#images[@]}
