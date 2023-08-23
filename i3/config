@@ -33,13 +33,13 @@ exec --no-startup-id dex --autostart --environment i3
 
 # Start-up programs
 exec_always --no-startup-id picom
-exec_always --no-startup-id ~/.config/i3/bin/bg_image_picker
+exec_always --no-startup-id feh --bg-scale ~/.config/i3/main-background.jpg
 exec_always --no-startup-id nm-applet
 exec_always --no-startup-id flameshot
 # exec_always --no-startup-id pasystray
 # exec_alaways --no-startup-id blue-man
 exec --no-startup-id diodon
-exec --no-startup-id dunst 
+exec --no-startup-id dunst
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
@@ -54,7 +54,7 @@ exec --no-startup-id nm-applet
 
 # Custom bindsyms
 bindsym $mod+p exec ~/.config/i3/bin/logout
-bindsym $mod+l exec i3lock -i ~/.config/i3/lock-background.png
+bindsym $mod+l exec i3lock -i ~/.config/i3/main-background.jpg
 bindsym $mod+c exec firefox
 bindsym $mod+Shift+f exec ~/.config/i3/bin/rofifinder
 bindsym $mod+Print exec flameshot gui
@@ -172,22 +172,25 @@ set $ws10 "10 &#xf0ae;"
 
 # Bind App to workspace
 # Check class by using xprop command
-assign [class="Terminal"] $ws1
-assign [class="Firefox"] $ws2
-assign [class="Chromium"] $ws2
-assign [class="(?i)code"] $ws3
-assign [class="teams-for-linux"] $ws5
-assign [class="teams"] $ws5
+assign [class="Alacritty"] $ws1
+assign [class="firefox"] $ws2
+assign [class="chromium"] $ws2
+assign [class="Code"] $ws3
+assign [class="Ferdium"] $ws5
 assign [class="gedit"] $ws6
 assign [class="mqtt-explorer"] $ws7
-assign [class="Thunderbird"] $ws8
+assign [class="thunderbird"] $ws8
 assign [class="redisinsight"] $ws8
 assign [class="xmind"] $ws9
 
 # Assign to certain workspace
-assign [window_role="terminal"] $ws1
-assign [window_role="browser"] $ws2
-assign [window_role="code"] $ws3
+# Wrong window_role values. Use xprop to determine window roles.
+# Assign window roles to workspaces
+
+# assign [window_role="terminal"] $ws1
+# assign [window_role="browser"] $ws2
+# assign [window_role="Code"] $ws3
+# assign [window_role="Ferdium"] $ws5
 
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
