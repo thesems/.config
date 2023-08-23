@@ -174,8 +174,8 @@ set $ws10 "10 &#xf0ae;"
 # Bind App to workspace
 # Check class by using xprop command
 assign [class="Alacritty"] $ws1
-assign [class="firefox"] $ws2
-assign [class="chromium"] $ws2
+assign [class="Firefox"] $ws2
+assign [class="Chromium"] $ws2
 assign [class="Code"] $ws3
 assign [class="Ferdium"] $ws5
 assign [class="gedit"] $ws6
