@@ -6,7 +6,7 @@ case $option in
         /usr/bin/systemctl suspend
         ;;
     'lock screen')
-        i3lock -i /home/semir/.config/pictures/main-background-1.jpg
+        i3lock -i /home/semir/.config/i3/main-background.png
         ;;
     logout)
         i3-nagbar -t warning -m 'Are you sure you  want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'

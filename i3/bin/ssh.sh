@@ -17,6 +17,7 @@ disk_info=$(df -h / | awk '/\// {print $4 "B"}')
 # ANSI Colors
 YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
+GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
 # Print details in formatted manner
