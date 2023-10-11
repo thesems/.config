@@ -20,7 +20,8 @@ vim.keymap.set('n', '<C-p>', builtin.find_files, {})
 -- vim.keymap.set('n', '<space><space>', '<F2>', {remap = true})
 
 vim.opt.termguicolors = true
-vim.cmd.colorscheme('kanagawa')
+-- vim.cmd.colorscheme('kanagawa')
+vim.cmd.colorscheme('gruvbox')
 
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })

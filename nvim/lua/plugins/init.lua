@@ -23,7 +23,8 @@ local plugins = {
             {'rafamadriz/friendly-snippets'}, -- Optional
         }
     },
-    {'rebelot/kanagawa.nvim'},
+    -- {'rebelot/kanagawa.nvim'},
+    {'ellisonleao/gruvbox.nvim'},
     {'nvim-lualine/lualine.nvim'},
     {'akinsho/toggleterm.nvim', version = "*", opts = {
         open_mapping = [[<c-\>]],
