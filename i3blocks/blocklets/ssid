@@ -1,3 +1,6 @@
 #!/usr/bin/env bash
 # Be sure to change the WLAN interface
 echo "$(iw dev wlp0s20f3 link | grep SSID | cut -d " " -f 2-)"
+
+#Buttons Control
+case "$BLOCK_BUTTON" in 1) exec alacritty -e nmtui;;esac

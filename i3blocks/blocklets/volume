@@ -27,3 +27,5 @@ elif [ "$volume_percentage" -gt 50 ]; then
 else
   echo -e "$volume_down_icon $volume_percentage%"
 fi
+
+case "$BLOCK_BUTTON" in 1) exec pavucontrol;;esac
