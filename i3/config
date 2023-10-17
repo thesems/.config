@@ -54,7 +54,8 @@ bindsym $mod+Shift+f            exec ~/.config/i3/bin/rofifinder
 bindsym $mod+Print              exec flameshot gui
 bindsym Control+Shift+Insert    exec flameshot full
 bindsym Shift+Insert		    exec flameshot gui
-bindsym $mod+Shift+s         exec ~/.config/i3/bin/ssh
+bindsym $mod+Shift+s            exec ~/.config/i3/bin/ssh
+bindsym --release Caps_Lock     exec pkill -SIGRTMIN+10 i3blocks
 
 # Enable Print Screen
 #bindsym --release $mod+Print exec gnome-screenshot -i
