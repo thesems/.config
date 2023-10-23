@@ -48,13 +48,11 @@ exec --no-startup-id dunst
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
 # Custom bindsyms
-bindsym $mod+p                  exec ~/.config/i3/bin/logout
+bindsym $mod+p                  exec ~/.config/i3/bin/system-actions
 bindsym $mod+l                  exec i3lock -i ~/.config/i3/main-background.jpg
 bindsym $mod+Shift+f            exec ~/.config/i3/bin/rofifinder
-bindsym $mod+Print              exec flameshot gui
-bindsym Control+Shift+Insert    exec flameshot full
-bindsym Shift+Insert		    exec flameshot gui
-bindsym $mod+Shift+s            exec ~/.config/i3/bin/ssh
+bindsym Print                   exec flameshot gui
+bindsym Shift+Print             exec flameshot full
 bindsym --release Caps_Lock     exec pkill -SIGRTMIN+10 i3blocks
 
 # Enable Print Screen

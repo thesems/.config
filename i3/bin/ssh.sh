@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Initialize SSH
 eval $(ssh-agent)
@@ -21,14 +21,7 @@ GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
 # Print details in formatted manner
-printf "${YELLOW} ⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡${NC}\n"
-printf "${YELLOW}⚡ ${NC}%-20s  ${BLUE}%-40s${YELLOW}  ⚡${NC}\n" "Time" "$current_time"
-printf "${YELLOW}⚡ ${NC}%-20s  ${BLUE}%-40s${YELLOW}  ⚡${NC}\n" "Operating System" "$os_info"
-printf "${YELLOW}⚡ ${NC}%-20s  ${BLUE}%-40s${YELLOW}  ⚡${NC}\n" "CPU" "$cpu_info"
-printf "${YELLOW}⚡ ${NC}%-20s  ${BLUE}%-40s${YELLOW}  ⚡${NC}\n" "RAM" "$ram_info"
-printf "${YELLOW}⚡ ${NC}%-20s  ${BLUE}%-40s${YELLOW}  ⚡${NC}\n" "Disk" "$disk_info"
-printf "${YELLOW} ⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡${NC}\n"
-echo -e "${GREEN}SSH is loaded! Enjoy your session, sir!${NC}"
+echo -e "${GREEN}SSH is loaded.${NC}"
 
 # Launch a new shell
 exec $SHELL

@@ -27,7 +27,7 @@ local plugins = {
     {'ellisonleao/gruvbox.nvim'},
     {'nvim-lualine/lualine.nvim'},
     {'akinsho/toggleterm.nvim', version = "*", opts = {
-        open_mapping = [[<c-\>]],
+        open_mapping = [[<c-\>]], direction = 'float'
     }},
     {'numToStr/Comment.nvim'},
     {"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
