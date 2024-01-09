@@ -1,0 +1,10 @@
+require("plugin_config.colorscheme")
+require("plugin_config.lualine")
+require("plugin_config.treesitter")
+require("plugin_config.telescope")
+require("plugin_config.mason")
+require("plugin_config.lspconfig")
+require("plugin_config.cmp-nvim-lsp")
+require("plugin_config.neo-tree")
+require("plugin_config.comment")
+
