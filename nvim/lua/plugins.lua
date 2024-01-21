@@ -8,6 +8,7 @@ require("lazy").setup({
     "stevearc/oil.nvim",
     -- "zbirenbaum/copilot.lua",
     "nvim-lualine/lualine.nvim",
+    "simrat39/rust-tools.nvim",
     -- completion
     "hrsh7th/nvim-cmp",
     "hrsh7th/cmp-nvim-lsp",
