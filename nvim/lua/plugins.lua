@@ -6,7 +6,6 @@ require("lazy").setup({
     "nvim-tree/nvim-web-devicons",
     "nvim-treesitter/nvim-treesitter",
     "stevearc/oil.nvim",
-    -- "zbirenbaum/copilot.lua",
     "nvim-lualine/lualine.nvim",
     "simrat39/rust-tools.nvim",
     -- completion
@@ -15,7 +14,14 @@ require("lazy").setup({
     "L3MON4D3/LuaSnip",
     "saadparwaiz1/cmp_luasnip",
     "rafamadriz/friendly-snippets",
-    "github/copilot.vim",
+    -- "github/copilot.vim",
+    { "zbirenbaum/copilot.lua", cmd = "Copilot", event = "InsertEnter", },
+    { 
+      "zbirenbaum/copilot-cmp",
+      config = function ()
+        require("copilot_cmp").setup()
+      end
+    },
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
