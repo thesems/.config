@@ -1,5 +1,5 @@
 require("mason-lspconfig").setup({
-  ensure_installed = { "lua_ls", "pyright", "tsserver", "rust_analyzer", "gopls", "svelte" }
+  ensure_installed = { "lua_ls", "pyright", "tsserver", "rust_analyzer", "gopls", "svelte", "ruff_lsp" }
 })
 
 local lspconfig = require('lspconfig')
@@ -30,7 +30,8 @@ require("lspconfig").lua_ls.setup {
 require("lspconfig").tsserver.setup({})
 require("lspconfig").gopls.setup({})
 require("lspconfig").tailwindcss.setup({})
-require("lspconfig").pyright.setup { capabilities = capabilities }
+require("lspconfig").pyright.setup {}
+require("lspconfig").ruff_lsp.setup{}
 require("lspconfig").svelte.setup{}
 
 vim.api.nvim_create_autocmd('LspAttach', {
