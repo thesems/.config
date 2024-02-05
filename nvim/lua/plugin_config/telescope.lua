@@ -1,4 +1,8 @@
 require('telescope').setup({ file_ignore_patterns = { "node%_modules/.*" } })
+require("telescope").load_extension("undo")
+
+vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>")
+
 local builtin = require('telescope.builtin')
 
 vim.keymap.set('n', '<c-p>', builtin.find_files, {})
