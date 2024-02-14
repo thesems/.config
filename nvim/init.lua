@@ -1,5 +1,7 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+vim.g.python_host_prog = '/usr/bin/python'
+vim.g.python3_host_prog = '/usr/bin/python3'
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
