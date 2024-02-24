@@ -1,2 +1,2 @@
 #!/bin/bash
-xdg-open "$(locate -i / | rofi -threads 0 -width 100 -dmenu -i -p "Find")"
+xdg-open "$(locate -i / | rofi -theme gruvbox-dark-soft -threads 0 -width 100 -dmenu -i -p "Find")"
