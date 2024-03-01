@@ -7,7 +7,13 @@ require("lazy").setup({
     "nvim-treesitter/nvim-treesitter",
     "stevearc/oil.nvim",
     "nvim-lualine/lualine.nvim",
-    "simrat39/rust-tools.nvim",
+    "mfussenegger/nvim-dap",
+    "rcarriga/nvim-dap-ui",
+    {
+        'mrcjkb/rustaceanvim',
+        version = '^4', -- Recommended
+        ft = { 'rust' },
+    },
     -- completion
     "hrsh7th/nvim-cmp",
     "hrsh7th/cmp-nvim-lsp",

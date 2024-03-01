@@ -1,6 +1,6 @@
 # Instalation of packages
 # General
-pacman -S ttf-jetbrains-mono-nerd
+pacman -S ttf-jetbrains-mono-nerd noto-fonts-cjk noto-fonts-emoji noto-fonts
 # terminal
 pacman -S kitty --noconfirm
 # i3 with accompanying software

@@ -1,4 +1,4 @@
-require('telescope').setup({ file_ignore_patterns = { "node%_modules/.*" } })
+require('telescope').setup({})
 require("telescope").load_extension("undo")
 
 vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>")

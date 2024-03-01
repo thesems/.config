@@ -1,5 +1,5 @@
 require("mason-lspconfig").setup({
-    ensure_installed = { "lua_ls", "pyright", "tsserver", "rust_analyzer", "gopls", "svelte", "ruff_lsp" }
+    ensure_installed = { "lua_ls", "pyright", "tsserver", "rust_analyzer", "gopls", "svelte", "ruff_lsp", "tailwindcss" }
 })
 
 local lspconfig = require('lspconfig')
@@ -55,7 +55,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set('n', '<leader>rr', vim.lsp.buf.references, opts)
         vim.keymap.set('n', '<leader>ff', function() vim.lsp.buf.format { async = true } end, opts)
         vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
- 
         -- vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
         -- vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
         -- vim.keymap.set('n', '<space>e', vim.lsp.buf.type_definition, opts)
