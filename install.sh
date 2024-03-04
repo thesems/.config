@@ -1,10 +1,18 @@
 # Instalation of packages
 # General
-pacman -S ttf-jetbrains-mono-nerd noto-fonts-cjk noto-fonts-emoji noto-fonts
-# terminal
-pacman -S kitty --noconfirm
-# i3 with accompanying software
-pacman -S i3-wm i3blocks i3status i3lock rofi dunst ttf-font-awesome --noconfirm
+pacman -S ttf-jetbrains-mono-nerd noto-fonts-cjk noto-fonts-emoji noto-fonts ttf-font-awesome
+
+# terminal, shell
+pacman -S kitty fish --noconfirm
+
+# fisher
+curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
+
+# TODO: fisher: nvm
+
+# i3
+pacman -S i3-wm i3blocks i3status i3lock rofi dunst diodon --noconfirm
+
 # nvim
 sudo pacman -S nvim ripgrep fd --noconfirm
 

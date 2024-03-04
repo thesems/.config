@@ -12,9 +12,9 @@ is_muted=$(pactl get-sink-mute @DEFAULT_SINK@)
 is_muted=$(echo "$is_muted" | awk '/Mute:/{print $2; exit}')
 
 # Define the muted icon unicode
-muted_icon='\uf026'
-volume_up_icon='\uf028'
-volume_down_icon='\uf027'
+muted_icon='\uf026  '
+volume_up_icon='\uf028  '
+volume_down_icon='\uf027  '
 
 # Remove newlines from the output
 # is_muted="${is_muted//[$'\n']/}"
