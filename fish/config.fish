@@ -1,50 +1,59 @@
-# alias
-alias e="nvim"
-alias g="git"
-alias ga="git add ."
-alias gl="git log"
-alias gs="git status"
-alias gb="git branch"
-alias gp="git push; git push --tags"
-alias gpf="git push -f; git push --tags -f"
-alias gph="git pull"
+# env, path
+set -gx ANDROID_HOME ~/Android/Sdk
+fish_add_path $ANDROID_HOME 
 
-set -g fish_color_normal white
-set -g fish_color_autosuggestion brblack
-set -g fish_color_search_match --background='333'
-set -U fish_prompt_pwd_dir_length 0
+# shortcuts
+abbr -a c cargo
+abbr -a e nvim
 
-# git information, colors, icons
-set -g __fish_git_prompt_show_informative_status 0
-set -g __fish_git_prompt_hide_untrackedfiles 0
-set -g __fish_git_prompt_color_branch brgreen 
-set -g __fish_git_prompt_showdirtystate 'yes'
-set -g __fish_git_prompt_showstashstate 'yes'
-set -g __fish_git_prompt_showupstream 'yes'
-set -g __fish_git_prompt_shorten_branch_len '8' 
-set -g __fish_git_prompt_showupstream "informative"
-set -g __fish_git_prompt_showuntrackedfiles 'yes'
-set -g __fish_git_prompt_char_dirtystate 'x'
-set -g __fish_git_prompt_char_stagedstate '→'
-set -g __fish_git_prompt_char_untrackedfiles '?'
-set -g __fish_git_prompt_char_stashstate '↩'
-set -g __fish_git_prompt_char_upstream_ahead "↑"
-set -g __fish_git_prompt_char_upstream_behind "↓"
-set -g __fish_git_prompt_char_cleanstate ""
-
-
-function fish_greeting
-end
-
-function fish_prompt
-    set_color normal 
-    printf (whoami)
-    set_color normal 
-    printf "@"(prompt_pwd)
-    printf '%s' (fish_git_prompt)
-    echo -n " \$ "
-end
+# git shortcuts
+abbr -a ga 'git add'
+abbr -a gaa 'git add .'
+abbr -a gl 'git log'
+abbr -a gd 'git diff'
+abbr -a gb 'git branch'
+abbr -a gs 'git status'
+abbr -a gp 'git pull'
+abbr -a gc 'git commit'
+abbr -a gco 'git checkout'
+abbr -a gph 'git push; and git push --tags'
+abbr -a gphf 'git push -f; and git push -f --tags'
+abbr -a gah 'git stash; and git pull --rebase; and git stash pop'
 
 if status is-interactive
     # Commands to run in interactive sessions can go here
+end
+
+function fish_prompt
+	set_color brblack
+	echo -n "["(date "+%H:%M")"] "
+	set_color blue
+	echo -n (hostnamectl hostname)
+	if [ $PWD != $HOME ]
+		set_color brblack
+		echo -n ':'
+		set_color yellow
+		echo -n (basename $PWD)
+	end
+	set_color green
+	printf '%s ' (__fish_git_prompt)
+	set_color red
+	echo -n '| '
+	set_color normal
+end
+
+function fish_greeting
+	echo
+	echo -e (uname -ro | awk '{print " \\\\e[1mOS: \\\\e[0;32m"$0"\\\\e[0m"}')
+	echo -e (uptime -p | sed 's/^up //' | awk '{print " \\\\e[1mUptime: \\\\e[0;32m"$0"\\\\e[0m"}')
+	echo -e (uname -n | awk '{print " \\\\e[1mHostname: \\\\e[0;32m"$0"\\\\e[0m"}')
+	echo -e " \\e[1mDisk usage:\\e[0m"
+	echo
+	echo -ne (\
+		df -l -h | grep -E 'dev/(xvda|sd|mapper)' | \
+		awk '{printf "\\\\t%s\\\\t%4s / %4s  %s\\\\n\n", $6, $3, $2, $5}' | \
+		sed -e 's/^\(.*\([8][5-9]\|[9][0-9]\)%.*\)$/\\\\e[0;31m\1\\\\e[0m/' -e 's/^\(.*\([7][5-9]\|[8][0-4]\)%.*\)$/\\\\e[0;33m\1\\\\e[0m/' | \
+		paste -sd ''\
+	)
+	echo
 end
