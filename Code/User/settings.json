@@ -1,0 +1,95 @@
+{
+    "window.title": "${dirty}${activeEditorShort}${separator}${rootPath}",
+    "window.titleBarStyle": "custom",
+    "window.zoomLevel": 1,
+    "workbench.iconTheme": "vscode-jetbrains-icon-theme",
+    "workbench.sideBar.location": "right",
+    "workbench.colorTheme": "Gruvbox Dark Medium",
+    "workbench.startupEditor": "none",
+    "workbench.editor.enablePreview": true,
+    "workbench.editor.enablePreviewFromCodeNavigation": false,
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+    "workbench.editor.showTabs": "multiple",
+    "editor.fontFamily": "'JetBrains Mono'",
+    "editor.fontLigatures": true,
+    "editor.minimap.enabled": false,
+    "editor.formatOnSave": true,
+    "editor.lineNumbers": "relative",
+    "editor.fontSize": 15,
+    "editor.inlayHints.enabled": "offUnlessPressed",
+    "editor.guides.indentation": false,
+    "editor.semanticTokenColorCustomizations": {
+        "enabled": true,
+        "rules": {
+            "*.mutable": {
+                "underline": false,
+            }
+        }
+    },
+    "debug.console.closeOnEnd": true,
+    "debug.focusEditorOnBreak": true,
+    "debug.openDebug": "openOnDebugBreak",
+    "debug.toolBarLocation": "docked",
+    "debug.internalConsoleOptions": "neverOpen",
+    "explorer.confirmDragAndDrop": false,
+    "git.openRepositoryInParentFolders": "never",
+    "go.toolsManagement.autoUpdate": true,
+    "zenMode.hideLineNumbers": false,
+    "comments.useRelativeTime": false,
+    "files.associations": {
+        "*.gohtml": "html"
+    },
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    },
+    "vscode-neovim.neovimClean": true,
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/.mypy_cache/**": true,
+        "**/*.pyc": true
+    },
+    "search.exclude": {
+        "dist": true,
+        "**/node_modules": true,
+        "**/.venv": true
+    },
+    "[javascript][javascriptreact][typescript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "[json][jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[yaml]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+    "[sql]": {
+        "editor.defaultFormatter": "mtxr.sqltools"
+    },
+    "[python]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        },
+        "editor.formatOnType": true,
+        "editor.defaultFormatter": "charliermarsh.ruff"
+    },
+    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.diagnosticMode": "workspace",
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "sqltools.format": {
+        "linesBetweenQueries": 1,
+    },
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "psql",
+            "database": "postgres",
+            "username": "postgres"
+        }
+    ],
+    "workbench.activityBar.location": "hidden"
+}
