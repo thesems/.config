@@ -28,7 +28,7 @@ require("lazy").setup({
     lazy = false,
     build = ":TSUpdate",
     opts = {
-            ensure_installed = { "lua", "python", "go" }
+            ensure_installed = { "lua", "python", "go", "rust", "javascript", "typescript", "tsx", "json" }
     }
   },
 
@@ -52,20 +52,30 @@ require("lazy").setup({
     }
   },
 
-  -- File Explorer (Oil.nvim)
+  -- File Explorer (neo-tree.nvim)
   {
-    'stevearc/oil.nvim',
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    cmd = "Neotree",
+    keys = {
+      { "<leader>t", "<cmd>Neotree toggle<cr>", desc = "Toggle file tree" },
+    },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons",
+      "MunifTanjim/nui.nvim",
+    },
     opts = {
-      view_options = {
-        show_hidden = true,
+      close_if_last_window = true,
+      filesystem = {
+        filtered_items = {
+          hide_dotfiles = false,
+        },
       },
-      float = {
-        max_width = 80,
-        max_height = 20,
-        border = "rounded",
+      window = {
+        width = 30,
       },
     },
-    dependencies = { "nvim-tree/nvim-web-devicons" },
   },
 
   -- Mason (only for :Mason UI)
@@ -78,6 +88,12 @@ require("lazy").setup({
         formatters_by_ft = {
             python = { "isort", "black" },
             go = { "goimports", "gofmt" },
+            rust = { "rustfmt" },
+            javascript = { "prettier" },
+            javascriptreact = { "prettier" },
+            typescript = { "prettier" },
+            typescriptreact = { "prettier" },
+            json = { "prettier" },
         },
         format_on_save = { timeout_ms = 500, lsp_fallback = true },
       })
@@ -86,13 +102,36 @@ require("lazy").setup({
 
   -- Linting
   { "mfussenegger/nvim-lint", event = "BufWritePost",
-    config = function()
-      require("lint").linters_by_ft = { 
+  config = function()
+      local lint = require("lint")
+
+      lint.linters_by_ft = {
           python = { "ruff" },
           go = { "golangcilint" },
+          javascript = { "eslint_d" },
+          javascriptreact = { "eslint_d" },
+          typescript = { "eslint_d" },
+          typescriptreact = { "eslint_d" },
       }
-      vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-        callback = function() require("lint").try_lint() end,
+
+      vim.api.nvim_create_autocmd("BufWritePost", {
+        group = vim.api.nvim_create_augroup("LintOnSave", { clear = true }),
+        callback = function()
+          local bufnr = vim.api.nvim_get_current_buf()
+          local ft = vim.bo[bufnr].filetype
+          local linters = lint.linters_by_ft[ft] or {}
+          local available_linters = {}
+
+          for _, linter in ipairs(linters) do
+            if vim.fn.executable(linter) == 1 then
+              available_linters[#available_linters + 1] = linter
+            end
+          end
+
+          if #available_linters > 0 then
+            lint.try_lint(available_linters)
+          end
+        end,
       })
     end,
   },
@@ -157,6 +196,68 @@ vim.lsp.config("gopls", {
 })
 vim.lsp.enable("gopls")
 
+vim.lsp.config("rust_analyzer", {
+  cmd = { "rust-analyzer" },
+  filetypes = { "rust" },
+  root_markers = { "Cargo.toml", "rust-project.json", ".git" },
+  settings = {
+    ["rust-analyzer"] = {
+      cargo = {
+        allFeatures = true,
+      },
+      check = {
+        command = "clippy",
+      },
+    },
+  },
+})
+vim.lsp.enable("rust_analyzer")
+
+vim.lsp.config("ts_ls", {
+  cmd = { "typescript-language-server", "--stdio" },
+  filetypes = {
+    "javascript",
+    "javascriptreact",
+    "javascript.jsx",
+    "typescript",
+    "typescriptreact",
+    "typescript.tsx",
+  },
+  root_markers = {
+    "package.json",
+    "tsconfig.json",
+    "jsconfig.json",
+    ".git",
+  },
+  single_file_support = true,
+  settings = {
+    completions = {
+      completeFunctionCalls = true,
+    },
+    typescript = {
+      inlayHints = {
+        includeInlayParameterNameHints = "all",
+        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayVariableTypeHints = true,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayEnumMemberValueHints = true,
+      },
+    },
+    javascript = {
+      inlayHints = {
+        includeInlayParameterNameHints = "all",
+        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayVariableTypeHints = true,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayEnumMemberValueHints = true,
+      },
+    },
+  },
+})
+vim.lsp.enable("ts_ls")
+
 -- Native LSP completion
 vim.opt.completeopt = "menuone,noselect,popup"
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -175,9 +276,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   end,
 })
 
--- Oil: Open file explorer
-vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
-
 -- 6. Keymaps
 -- Neovim 0.11 built-in LSP keymaps (no setup needed):
 --   K          hover
@@ -187,9 +285,29 @@ vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 --   gra        code action
 --   CTRL-]     go to definition
 --   CTRL-S     signature help (insert mode)
-vim.keymap.set('i', '<C-n>', function() vim.lsp.completion.get() end, { desc = 'Trigger completion' })
+local function feed(keys)
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(keys, true, false, true), "n", false)
+end
+
+vim.keymap.set("i", "<Tab>", function()
+  if vim.fn.pumvisible() == 1 then
+    feed("<C-n>")
+  else
+    feed("<Tab>")
+  end
+end, { silent = true, desc = "Next completion item or tab" })
+
+vim.keymap.set("i", "<S-Tab>", function()
+  if vim.fn.pumvisible() == 1 then
+    feed("<C-p>")
+  else
+    feed("<S-Tab>")
+  end
+end, { silent = true, desc = "Previous completion item or shift-tab" })
+
+vim.keymap.set("i", "<C-Space>", function() vim.lsp.completion.get() end, { desc = "Trigger completion" })
 vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = 'Go to definition' })
+vim.keymap.set('n', 'gy', vim.lsp.buf.type_definition, { desc = 'Go to type definition' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic' })
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Prev diagnostic' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Next diagnostic' })
-
