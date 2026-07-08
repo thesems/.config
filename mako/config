@@ -1,6 +1,0 @@
-# ~/.config/mako/config
-
-default-timeout=5000
-
-[urgency=high]
-ignore-timeout=1

@@ -1,7 +1,0 @@
-#!/bin/bash
-
-# Be sure to change the WLAN interface
-echo "📎    "
-
-#Buttons Control
-case "$BLOCK_BUTTON" in 1) exec diodon;;esac
