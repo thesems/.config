@@ -1,5 +1,63 @@
 { pkgs, ... }:
 
+let
+  batteryWarningScript = pkgs.writeShellScript "battery-warning" ''
+    set -eu
+
+    battery_dir="$(${pkgs.findutils}/bin/find /sys/class/power_supply -maxdepth 1 -type d -name 'BAT*' | ${pkgs.coreutils}/bin/head -n 1)"
+    [ -n "$battery_dir" ] || exit 0
+
+    status="$(${pkgs.coreutils}/bin/cat "$battery_dir/status" 2>/dev/null || echo Unknown)"
+    capacity="$(${pkgs.coreutils}/bin/cat "$battery_dir/capacity" 2>/dev/null || echo 0)"
+
+    case "$status" in
+      Discharging|Not\ charging) ;;
+      *)
+        ${pkgs.coreutils}/bin/rm -f "$XDG_RUNTIME_DIR/battery-warning-level"
+        exit 0
+        ;;
+    esac
+
+    level=""
+    urgency="normal"
+    title="Battery low"
+    body="Battery at ''${capacity}%."
+
+    if [ "$capacity" -le 5 ]; then
+      level="critical"
+      urgency="critical"
+      title="Battery critical"
+      body="Battery at ''${capacity}%. Plug in now."
+    elif [ "$capacity" -le 15 ]; then
+      level="low"
+    fi
+
+    if [ -z "$level" ]; then
+      ${pkgs.coreutils}/bin/rm -f "$XDG_RUNTIME_DIR/battery-warning-level"
+      exit 0
+    fi
+
+    state_file="$XDG_RUNTIME_DIR/battery-warning-level"
+    last_level=""
+    if [ -f "$state_file" ]; then
+      last_level="$(${pkgs.coreutils}/bin/cat "$state_file")"
+    fi
+
+    if [ "$last_level" = "$level" ]; then
+      exit 0
+    fi
+
+    ${pkgs.libnotify}/bin/notify-send \
+      --app-name="battery-monitor" \
+      --urgency="$urgency" \
+      --icon="battery-caution-symbolic" \
+      "$title" \
+      "$body"
+
+    printf '%s' "$level" > "$state_file"
+  '';
+in
+
 {
   home.stateVersion = "26.05";
 
@@ -10,14 +68,20 @@
       theme = "robbyrussell";
       plugins = [ "git" ];
     };
-    initExtra = ''
+    initContent = ''
       source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
       [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
     '';
   };
 
-  xdg.configFile."hypr/hyprland.conf".text = ''
+  xdg.configFile."hypr/hyprland.conf" = {
+    force = true;
+    text = ''
     $mod = SUPER
+
+    monitor = eDP-1, 1920x1200@60, 0x0, 1
+    # Example external 4K monitor:
+    # monitor = DP-1, 3840x2160@60, 1920x0, 1.5
 
     exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=Hyprland
     exec-once = systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
@@ -32,7 +96,33 @@
     bind = $mod, L, exec, wlogout
     bind = $mod, F, fullscreen
     bind = $mod, V, togglefloating
+    bindel = , XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+
+    bindel = , XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+    bindl = , XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+    bindel = , XF86MonBrightnessUp, exec, brightnessctl set 5%+
+    bindel = , XF86MonBrightnessDown, exec, brightnessctl set 5%-
+    bind = $mod, 1, workspace, 1
+    bind = $mod, 2, workspace, 2
+    bind = $mod, 3, workspace, 3
+    bind = $mod, 4, workspace, 4
+    bind = $mod, 5, workspace, 5
+    bind = $mod, 6, workspace, 6
+    bind = $mod, 7, workspace, 7
+    bind = $mod, 8, workspace, 8
+    bind = $mod, 9, workspace, 9
+    bind = $mod, 0, workspace, 10
+    bind = $mod SHIFT, 1, movetoworkspace, 1
+    bind = $mod SHIFT, 2, movetoworkspace, 2
+    bind = $mod SHIFT, 3, movetoworkspace, 3
+    bind = $mod SHIFT, 4, movetoworkspace, 4
+    bind = $mod SHIFT, 5, movetoworkspace, 5
+    bind = $mod SHIFT, 6, movetoworkspace, 6
+    bind = $mod SHIFT, 7, movetoworkspace, 7
+    bind = $mod SHIFT, 8, movetoworkspace, 8
+    bind = $mod SHIFT, 9, movetoworkspace, 9
+    bind = $mod SHIFT, 0, movetoworkspace, 10
   '';
+  };
 
   xdg.configFile."wayle/config.toml".text = ''
     [bar]
@@ -106,6 +196,24 @@
       margin-left: 8px;
     }
   '';
+
+  systemd.user.services.battery-warning = {
+    Unit.Description = "Warn when the battery is low";
+    Service = {
+      Type = "oneshot";
+      ExecStart = batteryWarningScript;
+    };
+  };
+
+  systemd.user.timers.battery-warning = {
+    Unit.Description = "Check battery level periodically";
+    Timer = {
+      OnBootSec = "2m";
+      OnUnitActiveSec = "1m";
+      Unit = "battery-warning.service";
+    };
+    Install.WantedBy = [ "timers.target" ];
+  };
 
   programs.wlogout = {
     enable = true;
@@ -223,13 +331,15 @@
     git
     neovim
     codex
+    chromium
     ghostty
     zed-editor
     _1password-gui
     zsh-powerlevel10k
-    ripgrep
     wayle
     wofi
+    libnotify
+    brightnessctl
     nerd-fonts.jetbrains-mono
     font-awesome
   ];
