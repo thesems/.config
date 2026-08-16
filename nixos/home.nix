@@ -96,6 +96,14 @@ in
     bind = $mod, L, exec, wlogout
     bind = $mod, F, fullscreen
     bind = $mod, V, togglefloating
+    bind = $mod, R, submap, resize
+    bind = $mod, H, movefocus, l
+    bind = $mod, J, movefocus, d
+    bind = $mod, K, movefocus, u
+    bind = $mod, Left, movefocus, l
+    bind = $mod, Down, movefocus, d
+    bind = $mod, Up, movefocus, u
+    bind = $mod, Right, movefocus, r
     bindel = , XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+
     bindel = , XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
     bindl = , XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
@@ -121,6 +129,20 @@ in
     bind = $mod SHIFT, 8, movetoworkspace, 8
     bind = $mod SHIFT, 9, movetoworkspace, 9
     bind = $mod SHIFT, 0, movetoworkspace, 10
+
+    submap = resize
+    binde = , H, resizeactive, -30 0
+    binde = , J, resizeactive, 0 30
+    binde = , K, resizeactive, 0 -30
+    binde = , L, resizeactive, 30 0
+    binde = , Left, resizeactive, -30 0
+    binde = , Down, resizeactive, 0 30
+    binde = , Up, resizeactive, 0 -30
+    binde = , Right, resizeactive, 30 0
+    bind = , Escape, submap, reset
+    bind = , Return, submap, reset
+    bind = , R, submap, reset
+    submap = reset
   '';
   };
 
