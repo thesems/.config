@@ -7,18 +7,25 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { nixpkgs, home-manager, ... }: {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        ./configuration.nix
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.semir = import ./home.nix;
-        }
-      ];
+  outputs = { nixpkgs, home-manager, ... }:
+    let
+      mkHost = hostModule: nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          hostModule
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.semir = import ./home.nix;
+          }
+        ];
+      };
+    in
+    {
+      nixosConfigurations = {
+        desktop = mkHost ./hosts/desktop/configuration.nix;
+        laptop = mkHost ./hosts/laptop/configuration.nix;
+      };
     };
-  };
 }
