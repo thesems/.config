@@ -9,8 +9,6 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = false;
 
-  boot.initrd.luks.devices."luks-b1537fd3-aff5-400e-b1ce-7325593d38d5".device = "/dev/disk/by-uuid/b1537fd3-aff5-400e-b1ce-7325593d38d5";
-
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
 
@@ -65,7 +63,7 @@
   virtualisation.docker.enable = true;
   virtualisation.docker.enableOnBoot = true;
 
-  users.users.semirr = {
+  users.users.semir = {
     isNormalUser = true;
     description = "Semir Ramovic";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
@@ -105,7 +103,7 @@
   programs._1password.enable = true;
   programs._1password-gui = {
     enable = true;
-    polkitPolicyOwners = [ "semirr" ];
+    polkitPolicyOwners = [ "semir" ];
   };
 
   programs.bash = {
