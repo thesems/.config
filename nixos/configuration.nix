@@ -1,8 +1,4 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running `nixos-help`).
-
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -11,7 +7,9 @@
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.efi.canTouchEfiVariables = false;
+
+  boot.initrd.luks.devices."luks-b1537fd3-aff5-400e-b1ce-7325593d38d5".device = "/dev/disk/by-uuid/b1537fd3-aff5-400e-b1ce-7325593d38d5";
 
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
@@ -19,7 +17,6 @@
   time.timeZone = "Europe/Vienna";
 
   i18n.defaultLocale = "en_US.UTF-8";
-
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "de_AT.UTF-8";
     LC_IDENTIFICATION = "de_AT.UTF-8";
@@ -33,8 +30,19 @@
   };
 
   services.xserver.enable = true;
-  services.displayManager.gdm.enable = true;
-  services.desktopManager.gnome.enable = true;
+
+  services.displayManager.sddm = {
+    enable = true;
+    wayland.enable = true;
+  };
+  services.desktopManager.plasma6.enable = true;
+  programs.hyprland = {
+    enable = true;
+    withUWSM = true;
+    xwayland.enable = true;
+  };
+  xdg.portal.enable = true;
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   services.xserver.xkb = {
     layout = "us";
@@ -52,30 +60,87 @@
     pulse.enable = true;
   };
 
-  programs.hyprland = {
-    enable = true;
-    withUWSM = true;
-    xwayland.enable = true;
-  };
+  services.blueman.enable = true;
 
-  xdg.portal.enable = true;
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+  virtualisation.docker.enable = true;
+  virtualisation.docker.enableOnBoot = true;
 
-  users.users.semir = {
+  users.users.semirr = {
     isNormalUser = true;
-    description = "semir";
-    extraGroups = [ "networkmanager" "wheel" ];
-    shell = pkgs.zsh;
+    description = "Semir Ramovic";
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    packages = with pkgs; [
+      kdePackages.kate
+    ];
   };
 
-  programs.zsh.enable = true;
-  programs.firefox.enable = true;
+  programs.nix-ld.enable = true;
 
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.android_sdk.accept_license = true;
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  environment.systemPackages = with pkgs; [
+    wl-clipboard
+    fzf
+    htop
+    neovim
+    python314
+    brave
+    chromium
+    dnsutils
+    ripgrep
+    docker
+    git
+    ghostty
+    unzip
+    wget
+    zed-editor
+    transmission_4-qt
+    tmux
+    lazygit
+    ledger-live-desktop
+    evince
+  ];
 
-  environment.systemPackages = with pkgs; [ ];
+  programs._1password.enable = true;
+  programs._1password-gui = {
+    enable = true;
+    polkitPolicyOwners = [ "semirr" ];
+  };
 
-  system.stateVersion = "26.05";
+  programs.bash = {
+    enable = true;
+    shellAliases = {
+      gs = "git status";
+      gaa = "git add --all";
+      gc = "git commit -m";
+      gca = "git commit --amend";
+      gp = "git pull";
+      gd = "git diff";
+      gds = "git diff --staged";
+      gl = "git log --oneline --graph --decorate --all";
+      gb = "git branch";
+      dc = "docker compose";
+      vim = "nvim";
+    };
+  };
+
+  programs.tmux = {
+    enable = true;
+    extraConfig = ''
+      set -g default-terminal "tmux-256color"
+      set -as terminal-overrides ',*:Tc'
+      set -g mouse on
+    '';
+  };
+
+  networking.firewall.allowedTCPPorts = [ 22 8000 8081 19000 19001 19002 ];
+  networking.firewall.allowedUDPPorts = [ 19000 19001 19002 5353 ];
+
+  system.stateVersion = "25.11";
+
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 }

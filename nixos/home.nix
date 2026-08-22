@@ -28,7 +28,7 @@ let
       urgency="critical"
       title="Battery critical"
       body="Battery at ''${capacity}%. Plug in now."
-    elif [ "$capacity" -le 15 ]; then
+    elif [ "$capacity" -le 20 ]; then
       level="low"
     fi
 
@@ -46,6 +46,13 @@ let
     if [ "$last_level" = "$level" ]; then
       exit 0
     fi
+
+    sound_file="${pkgs.sound-theme-freedesktop}/share/sounds/freedesktop/stereo/dialog-warning.oga"
+    if [ "$level" = "critical" ]; then
+      sound_file="${pkgs.sound-theme-freedesktop}/share/sounds/freedesktop/stereo/alarm-clock-elapsed.oga"
+    fi
+
+    ${pkgs.pipewire}/bin/pw-play "$sound_file" >/dev/null 2>&1 &
 
     ${pkgs.libnotify}/bin/notify-send \
       --app-name="battery-monitor" \
